@@ -13,7 +13,6 @@ const Lab5 = (app) => {
       case "subtract":
         result = parseInt(a) - parseInt(b);
         break;
-
       case "multiply":
         result = parseInt(a) * parseInt(b);
         break;
