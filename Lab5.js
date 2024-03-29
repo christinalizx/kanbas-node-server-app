@@ -22,6 +22,9 @@ const todos = [
 ];
 
 const Lab5 = (app) => {
+  app.get("/a5/welcome", (req, res) => {
+    res.send("Welcome to Assignment 5");
+  });
   app.get("/a5/todos", (req, res) => {
     const { completed } = req.query;
     if (completed !== undefined) {
@@ -33,21 +36,22 @@ const Lab5 = (app) => {
 
     res.json(todos);
   });
-  app.get("/a5/todos/create", (req, res) => {
+  app.post("/a5/todos", (req, res) => {
     const newTodo = {
+      ...req.body,
       id: new Date().getTime(),
-      title: "New Task",
-      completed: false,
     };
     todos.push(newTodo);
-    res.json(todos);
-  });
+    res.json(newTodo);
+});
+
   app.get("/a5/todos/:id/title/:title", (req, res) => {
     const { id, title } = req.params;
     const todo = todos.find((t) => t.id === parseInt(id));
     todo.title = title;
     res.json(todos);
-  });
+});
+
   app.get("/a5/todos/:id/completed/:completed", (req, res) => {
     const { id, completed } = req.params;
     const todo = todos.find((t) => t.id === parseInt(id));
