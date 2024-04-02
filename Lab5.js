@@ -44,14 +44,14 @@ const Lab5 = (app) => {
     };
     todos.push(newTodo);
     res.json(newTodo);
-});
+  });
 
   app.get("/a5/todos/:id/title/:title", (req, res) => {
     const { id, title } = req.params;
     const todo = todos.find((t) => t.id === parseInt(id));
     todo.title = title;
     res.json(todos);
-});
+  });
 
   app.get("/a5/todos/:id/completed/:completed", (req, res) => {
     const { id, completed } = req.params;
@@ -71,8 +71,7 @@ const Lab5 = (app) => {
     const { id } = req.params;
     const todo = todos.find((t) => t.id === parseInt(id));
     if (!todo) {
-      res.status(404)
-        .json({ message: `Unable to delete Todo with ID ${id}` });
+      res.status(404).json({ message: `Unable to delete Todo with ID ${id}` });
       return;
     }
     todos.splice(todos.indexOf(todo), 1);
@@ -82,8 +81,7 @@ const Lab5 = (app) => {
     const { id } = req.params;
     const todo = todos.find((t) => t.id === parseInt(id));
     if (!todo) {
-      res.status(404)
-        .json({ message: `Unable to update Todo with ID ${id}` });
+      res.status(404).json({ message: `Unable to update Todo with ID ${id}` });
       return;
     }
     todo.title = req.body.title;
@@ -92,9 +90,6 @@ const Lab5 = (app) => {
     todo.completed = req.body.completed;
     res.sendStatus(200);
   });
-
-  
-
 
   app.get("/a5/todos/:id", (req, res) => {
     const { id } = req.params;
@@ -133,6 +128,30 @@ const Lab5 = (app) => {
     const { newName } = req.params;
     courseModule.name = newName;
     res.json(courseModule);
+  });
+
+  app.get("/a5/add/:a/:b", (req, res) => {
+    const { a, b } = req.params;
+    const sum = parseInt(a) + parseInt(b);
+    res.send(sum.toString());
+  });
+
+  app.get("/a5/subtract/:a/:b", (req, res) => {
+    const { a, b } = req.params;
+    const sum = parseInt(a) - parseInt(b);
+    res.send(sum.toString());
+  });
+
+  app.get("/a5/multiply/:a/:b", (req, res) => {
+    const { a, b } = req.params;
+    const sum = parseInt(a) * parseInt(b);
+    res.send(sum.toString());
+  });
+
+  app.get("/a5/divide/:a/:b", (req, res) => {
+    const { a, b } = req.params;
+    const sum = parseInt(a) / parseInt(b);
+    res.send(sum.toString());
   });
 
   app.get("/a5/calculator", (req, res) => {
