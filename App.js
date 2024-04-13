@@ -13,7 +13,6 @@ import Lab5 from "./Lab5.js";
 
 const app = express();
 
-// Configure CORS with credentials
 const corsOptions = {
   origin: process.env.FRONTEND_URL, 
   credentials: true, 
@@ -47,7 +46,6 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(session(sessionOptions));
 
-// Routes
 UserRoutes(app);
 ModuleRoutes(app);
 CourseRoutes(app);
@@ -55,7 +53,6 @@ AssignmentRoutes(app);
 Hello(app);
 Lab5(app);
 
-// Start the server
 app.listen(4000, () => {
   console.log('Server is running on http://localhost:4000');
 });
