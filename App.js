@@ -13,25 +13,18 @@ import Lab5 from "./Lab5.js";
 
 const app = express();
 
-const whitelist = ['http://localhost:3000', "https://661aba5ae725fd0008fc7cdc--stalwart-faun-996db6.netlify.app"];
+// Configure CORS with credentials
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: process.env.FRONTEND_URL,
   credentials: true,
   optionsSuccessStatus: 200
 };
 
-
 app.use(cors(corsOptions));
 app.use(express.json());
 
-const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas";
-mongoose.connect(CONNECTION_STRING);
+// Database connection
+mongoose.connect("mongodb+srv://zixi:1L2z3x456@cluster0.jerqkvg.mongodb.net/kanbas?retryWrites=true&w=majority");
 mongoose.connection.on("connected", () => {
   console.log("Mongoose connected to db.");
 });
@@ -54,6 +47,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(session(sessionOptions));
 
+// Routes
 UserRoutes(app);
 ModuleRoutes(app);
 CourseRoutes(app);
@@ -61,8 +55,7 @@ AssignmentRoutes(app);
 Hello(app);
 Lab5(app);
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// Start the server
+app.listen(4000, () => {
+  console.log('Server is running on http://localhost:4000');
 });
-
