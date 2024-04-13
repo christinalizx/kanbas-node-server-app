@@ -13,11 +13,19 @@ import Lab5 from "./Lab5.js";
 
 const app = express();
 
+const whitelist = ['http://localhost:3000', "https://661aba5ae725fd0008fc7cdc--stalwart-faun-996db6.netlify.app"];
 const corsOptions = {
-  origin: process.env.FRONTEND_URL, 
-  credentials: true, 
-  optionsSuccessStatus: 200 
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200
 };
+
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -53,6 +61,8 @@ AssignmentRoutes(app);
 Hello(app);
 Lab5(app);
 
-app.listen(4000, () => {
-  console.log('Server is running on http://localhost:4000');
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
+
