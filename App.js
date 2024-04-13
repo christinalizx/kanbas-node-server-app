@@ -23,8 +23,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Database connection
-mongoose.connect("mongodb://127.0.0.1:27017/kanbas");
+const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas";
+mongoose.connect(CONNECTION_STRING);
 mongoose.connection.on("connected", () => {
   console.log("Mongoose connected to db.");
 });
