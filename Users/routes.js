@@ -1,8 +1,19 @@
 import * as dao from "./dao.js";
 
-let globalCurrentuser;
+let globalCurrentuser = null;
 
 export default function UserRoutes(app) {
+  const signup = async (req, res) => {
+    const user = await dao.findUserByUsername(req.body.username);
+    if (user) {
+      res.status(400).json({ message: "Username already taken" });
+    }
+    const currentUser = await dao.createUser(req.body);
+    req.session["currentUser"] = currentUser;
+    globalCurrentuser = currentUser;
+    res.json(currentUser);
+  };
+
   const createUser = async (req, res) => {
     const user = await dao.createUser(req.body);
     res.json(user);
@@ -24,19 +35,6 @@ export default function UserRoutes(app) {
     const currentUser = await dao.findUserById(userId);
     res.json(status);
   };
-
-  const signup = async (req, res) => {
-    const user = await dao.findUserByUsername(req.body.username);
-    if (user) {
-      res.status(400).json(
-        { message: "Username already taken" });
-    }
-    const currentUser = await dao.createUser(req.body);
-    req.session["currentUser"] = currentUser;
-    globalCurrentuser = currentUser;
-    res.json(currentUser);
-  };
-
 
   const signin = async (req, res) => {
     const { username, password } = req.body;
