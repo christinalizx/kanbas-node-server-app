@@ -3,6 +3,16 @@ import * as dao from "./dao.js";
 let globalCurrentuser = null;
 
 export default function UserRoutes(app) {
+  const profile = async (req, res) => {
+    const currentUser = req.session["currentUser"];
+    globalCurrentuser = currentUser;
+    if (!currentUser) {
+      res.sendStatus(401);
+      return;
+    }
+    res.json(currentUser);
+  };
+
   const signup = async (req, res) => {
     const user = await dao.findUserByUsername(req.body.username);
     if (user) {
@@ -53,15 +63,6 @@ export default function UserRoutes(app) {
     res.sendStatus(200);
   };
 
-  const profile = async (req, res) => {
-    const currentUser = req.session["currentUser"];
-    globalCurrentuser = currentUser;
-    if (!currentUser) {
-      res.sendStatus(401);
-      return;
-    }
-    res.json(currentUser);
-  };
   const findAllUsers = async (req, res) => {
     const { role } = req.query;
     if (role) {
