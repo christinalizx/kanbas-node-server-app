@@ -10,11 +10,13 @@ import CourseRoutes from "./Kanbas/courses/routes.js";
 import AssignmentRoutes from "./Kanbas/assignments/routes.js";
 import Hello from "./Hello.js";
 import Lab5 from "./Lab5.js";
+import QuizRoutes from "./Kanbas/quizzes/routes.js";
+import QuestionRoutes from "./Kanbas/questions/routes.js";
 
 const app = express();
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
+  origin: "http://localhost:3000",
   credentials: true,
   optionsSuccessStatus: 200
 };
@@ -51,6 +53,8 @@ UserRoutes(app);
 ModuleRoutes(app);
 CourseRoutes(app);
 AssignmentRoutes(app);
+QuestionRoutes(app);
+QuizRoutes(app);
 Hello(app);
 Lab5(app);
 
