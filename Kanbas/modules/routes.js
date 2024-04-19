@@ -10,7 +10,7 @@ function ModuleRoutes(app) {
         };
         res.sendStatus(204);
       });
-    
+     
     app.delete("/api/modules/:mid", (req, res) => {
         const { mid } = req.params;
         db.modules = db.modules.filter((m) => m._id !== mid);
