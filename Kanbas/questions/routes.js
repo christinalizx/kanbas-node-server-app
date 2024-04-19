@@ -25,11 +25,19 @@ export default function QuestionRoutes(app) {
 
     // get all questions for a given quiz
     const findAllQuizQuestions = async (req, res) => {
-        const quizzes = await dao.findAllQuizQuestions(req.params.qid);
-        res.json(quizzes);
-    };    
+        try {
+            const questions = await dao.findAllQuizQuestions(req.params.qid);
+            if (!questions || questions.length === 0) {
+                return res.status(404).send('No questions found for this quiz.');
+            }
+            res.json(questions);
+        } catch (error) {
+            console.error("Failed to fetch questions for quiz:", error);
+            res.status(500).json({ error: error.message });
+        }
+    };
     app.get("/api/quizzes/:qid/questions", findAllQuizQuestions);
-
+    
     // update a question
     const updateQuestion = async (req, res) => {
         console.log(req.body);
