@@ -26,7 +26,7 @@ export default function QuestionRoutes(app) {
     // get all questions for a given quiz
     const findAllQuizQuestions = async (req, res) => {
         try {
-            const questions = await dao.findAllQuizQuestions(req.params.qid);
+            const questions = await dao.findAllQuizQuestions({ quizId: req.params.qid });
             if (!questions || questions.length === 0) {
                 return res.status(404).send('No questions found for this quiz.');
             }
