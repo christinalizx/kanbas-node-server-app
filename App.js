@@ -9,6 +9,7 @@ import ModuleRoutes from "./Kanbas/modules/routes.js";
 import CourseRoutes from "./Kanbas/courses/routes.js";
 import AssignmentRoutes from "./Kanbas/assignments/routes.js";
 import QuizRoutes from "./Kanbas/quizzes/routes.js";
+import QuestionRoutes from "./Kanbas/questions/routes.js";
 import Hello from "./Hello.js";
 import Lab5 from "./Lab5.js";
 
@@ -53,6 +54,7 @@ ModuleRoutes(app);
 CourseRoutes(app);
 AssignmentRoutes(app);
 QuizRoutes(app);
+QuestionRoutes(app);
 Hello(app);
 Lab5(app);
 
